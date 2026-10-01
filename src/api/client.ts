@@ -1,10 +1,8 @@
 import axios, { AxiosResponse, type AxiosInstance } from "axios";
 import { getToken } from "./secureStore";
 
-// Базовый URL фейкового API
 const API_BASE_URL = "https://api.fake-rest.refine.dev";
 
-// Экземпляр axios с настройками
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -14,13 +12,11 @@ const apiClient: AxiosInstance = axios.create({
 });
 
 apiClient.interceptors.request.use(
-  (config) => {
-    getToken().then((item) => {
-      if (item) {
-        config.headers = config.headers || {};
-        config.headers.Authorization = `Bearer ${item}`;
-      }
-    });
+  async (config) => {
+    const item = await getToken();
+    if (item) {
+      config.headers.Authorization = `Bearer ${item}`;
+    }
 
     return config;
   },

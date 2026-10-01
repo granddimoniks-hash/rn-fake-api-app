@@ -1,4 +1,3 @@
-// api for /users
 import apiClient from "./client";
 
 export interface Avatar {
@@ -22,12 +21,10 @@ export interface User {
   avatar?: Avatar[];
 }
 
-// GET /users — получение списка всех пользователей
 export const getUsers = async () => {
   return apiClient.get<User[]>("/users");
 };
 
-// GET /users — получение пользователя по id
 export const getUserById = async (id: number) => {
   return apiClient.get<User[]>(`/users/${id}`);
 };
